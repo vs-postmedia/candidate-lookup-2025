@@ -251,9 +251,6 @@
         z-index: 1;
         margin: 0 10px;
     }
-    .mapboxgl-ctrl-geocoder {
-        min-width: 100%;
-    }
     .geocoding {
         display: flex;
         justify-content: center;
@@ -274,8 +271,4 @@
 	) {
 		font-family: 'BentonSansCond-Regular', sans;
 	}
-    :global(#map) {
-        height: 0;
-        display: none;
-    }
 </style>
