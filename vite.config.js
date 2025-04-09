@@ -7,7 +7,7 @@ const projectPath = '/candidate-lookup-2024/';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/candidate-lookup-2024/',
+  base: '/candidate-lookup-2025/',
   // base: process.env.MODE === 'production' ? projectPath : '/',
   plugins: [svelte()],
   resolve: {

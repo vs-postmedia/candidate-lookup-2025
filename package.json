@@ -1,5 +1,5 @@
 {
-	"name": "candidate-lookup-2024",
+	"name": "candidate-lookup-2025",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -21,7 +21,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@mapbox/mapbox-gl-geocoder": "^5.0.3",
 		"@maplibre/maplibre-gl-geocoder": "^1.8.0",
 		"@turf/helpers": "^7.1.0",
 		"@turf/points-within-polygon": "^7.1.0",
