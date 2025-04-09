@@ -11,8 +11,10 @@
     import RidingDetails from '$components/RidingDetails.svelte';
 
     // DATA
-    import ridings2024 from '$data/riding-boundaries-2024.js';
-    import ridings2020 from '$data/riding-boundaries-2020.js';
+    import ridingsCurrent from '$data/riding-boundaries-2024.js';
+    import ridingsPrev from '$data/riding-boundaries-2020.js';
+    // const resultsUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_QVHNdI3f4m1klbM1yPoyFx4eZ1l69DPJUazYAnAYr6q73talOa2AuY03EH_dwixMBzZaiPg1xxwk/pub?gid=1366195801&single=true&output=csv';
+    // const candidatesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_QVHNdI3f4m1klbM1yPoyFx4eZ1l69DPJUazYAnAYr6q73talOa2AuY03EH_dwixMBzZaiPg1xxwk/pub?gid=715203723&single=true&output=csv';
     const candidatesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTk-n-FsNcDDFKdo-zB665ebijtYBNE5G9i1WflJYgStgVItlvT26XmzBn_T1Vkn2lKkYggnkVAA2UJ/pub?gid=0&single=true&output=csv';
     const resultsUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTk-n-FsNcDDFKdo-zB665ebijtYBNE5G9i1WflJYgStgVItlvT26XmzBn_T1Vkn2lKkYggnkVAA2UJ/pub?gid=715680360&single=true&output=csv';
 
@@ -83,9 +85,6 @@
 
                         const address = addressParts.join(', ');
 
-                        console.log(address)
-                        console.log(result)
-
                         return {
                             center: [parseFloat(result.lon), parseFloat(result.lat)],
                             geometry: {
@@ -106,7 +105,7 @@
         }
     };
 
-    // nominatim geocoders
+    // nominatim geocoder
     geocoder = new MaplibreGeocoder(nominatimGeocoderApi, {
         // maplibregl: { Map: function() {} }, // Required, even if no map
         marker: false,
@@ -116,7 +115,7 @@
 
     // /FUNCTIONS
     function addGeocoderGL(geocodeEl) {
-        console.log(geocoder)
+        // console.log(geocoder)
         // add event listeners
         geocoder
             .on('result', handleGeocodeResults)
@@ -173,11 +172,11 @@
     }
 
     function handleGeocodeResults(e) {
-        // console.log(e)
+        console.log(e)
         if (e.detail !== null) {
             const latlon = e.result.center;
-            ridingCurrent = getRiding(latlon, ridings2024); // ridings2024
-            ridingPrev = getRiding(latlon, ridings2020); // ridings2020
+            ridingCurrent = getRiding(latlon, ridingsCurrent); // ridingsCurrent
+            ridingPrev = getRiding(latlon, ridingsPrev); // ridingsPrev
 
             ridingResults = getRidingResults(ridingPrev, resultsData);
             // candidates always uses 2024 riding info
@@ -255,6 +254,7 @@
         display: flex;
         justify-content: center;
         margin: 0 auto;
+        min-width: 320px;
     }
     .geocoding .voting-emoji {
         font-size: 2rem;
@@ -263,7 +263,6 @@
   	:global(input:focus) {
 		outline: none;
   	}
-
 	:global(
 		.svelte-select .selected-item,
 		.svelte-select .item,

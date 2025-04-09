@@ -57,9 +57,9 @@
     </div>
 {:else}
     <div id="no-data">
-        <p>To find the candidates running in your riding this fall, enter a street name, postal code or location in the search box above and <bold>select an option from the menu that appears.</bold></p>
+        <p>To find the candidates running in your riding this fall, enter an address (don’t forget to include “street,” “avenue,” etc.) in the search box and <bold>select an option from the menu that appears.</bold></p>
         <p>If you live in a densely populated area like Metro Vancouver, you should include a street number. For rural or remote areas, a street or town name is often enough.</p>
-        <p>Commas are optional, but improve results.</p>
+        <!-- <p>Commas are optional, but improve results.</p> -->
     </div>
 {/if}
 

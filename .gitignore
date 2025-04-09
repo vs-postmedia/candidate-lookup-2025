@@ -69,3 +69,4 @@ dist/*
 
 # OSX ds_store files
 .DS_Store
+.Rproj.user
