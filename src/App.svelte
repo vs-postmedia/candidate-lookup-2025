@@ -3,20 +3,19 @@
     import Papa from 'papaparse';
     import { onMount } from 'svelte';
     import * as turf from '@turf/helpers';
-    // import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-    // import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder';
     import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
     import PointsWithinPolygon from '@turf/points-within-polygon';
     import RidingDetails from '$components/RidingDetails.svelte';
 
     // DATA
-    import ridingsCurrent from '$data/riding-boundaries-2024.js';
-    import ridingsPrev from '$data/riding-boundaries-2020.js';
-    // const resultsUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_QVHNdI3f4m1klbM1yPoyFx4eZ1l69DPJUazYAnAYr6q73talOa2AuY03EH_dwixMBzZaiPg1xxwk/pub?gid=1366195801&single=true&output=csv';
-    // const candidatesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_QVHNdI3f4m1klbM1yPoyFx4eZ1l69DPJUazYAnAYr6q73talOa2AuY03EH_dwixMBzZaiPg1xxwk/pub?gid=715203723&single=true&output=csv';
-    const candidatesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTk-n-FsNcDDFKdo-zB665ebijtYBNE5G9i1WflJYgStgVItlvT26XmzBn_T1Vkn2lKkYggnkVAA2UJ/pub?gid=0&single=true&output=csv';
-    const resultsUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTk-n-FsNcDDFKdo-zB665ebijtYBNE5G9i1WflJYgStgVItlvT26XmzBn_T1Vkn2lKkYggnkVAA2UJ/pub?gid=715680360&single=true&output=csv';
+    import ridingsPrev from '$data/riding-boundaries-2021.js';
+    import ridingsCurrent from '$data/riding-boundaries-2025.js';
+    const resultsUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_QVHNdI3f4m1klbM1yPoyFx4eZ1l69DPJUazYAnAYr6q73talOa2AuY03EH_dwixMBzZaiPg1xxwk/pub?gid=1366195801&single=true&output=csv';
+    const candidatesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR_QVHNdI3f4m1klbM1yPoyFx4eZ1l69DPJUazYAnAYr6q73talOa2AuY03EH_dwixMBzZaiPg1xxwk/pub?gid=715203723&single=true&output=csv';
+    // PROV DATA //
+    // const candidatesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTk-n-FsNcDDFKdo-zB665ebijtYBNE5G9i1WflJYgStgVItlvT26XmzBn_T1Vkn2lKkYggnkVAA2UJ/pub?gid=0&single=true&output=csv';
+    // const resultsUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTk-n-FsNcDDFKdo-zB665ebijtYBNE5G9i1WflJYgStgVItlvT26XmzBn_T1Vkn2lKkYggnkVAA2UJ/pub?gid=715680360&single=true&output=csv';
 
 
     // VARIABLES
@@ -158,6 +157,7 @@
 	    ridings.features.forEach(d => {
 		    // find which polygon the point is within
 		    const withinPoly = PointsWithinPolygon(point, d);
+
 		    if (withinPoly.features.length > 0) {
                 ridingName = d.properties.ED_NAME;
                 return;
@@ -172,14 +172,17 @@
     }
 
     function handleGeocodeResults(e) {
-        console.log(e)
+        // console.log(e)
         if (e.detail !== null) {
             const latlon = e.result.center;
             ridingCurrent = getRiding(latlon, ridingsCurrent); // ridingsCurrent
             ridingPrev = getRiding(latlon, ridingsPrev); // ridingsPrev
 
+            console.log(ridingCurrent, ridingPrev)
+        
+            // get results from the previousriding 
             ridingResults = getRidingResults(ridingPrev, resultsData);
-            // candidates always uses 2024 riding info
+            // current candidate list from riding
             ridingCandidates = getCandidates(ridingCurrent, candidateData);
         }
     }
@@ -262,7 +265,7 @@
     }
   	:global(input:focus) {
 		outline: none;
-  	}
+  	}   
 	:global(
 		.svelte-select .selected-item,
 		.svelte-select .item,
